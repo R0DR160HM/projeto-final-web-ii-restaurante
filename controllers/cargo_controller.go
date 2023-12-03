@@ -40,7 +40,7 @@ func CriaCargo(c *gin.Context) {
 		return
 	}
 	database.DB.Create(&cargo)
-	c.JSON(http.StatusOK, cargo)
+	BuscarCargoPorId(c)
 }
 
 func AtualizarCargo(c *gin.Context) {
@@ -65,7 +65,7 @@ func AtualizarCargo(c *gin.Context) {
 	}
 
 	database.DB.Model(&cargo).UpdateColumns(cargo)
-	c.JSON(http.StatusOK, cargo)
+	BuscarCargoPorId(c)
 }
 
 func ExcluirCargo(c *gin.Context) {

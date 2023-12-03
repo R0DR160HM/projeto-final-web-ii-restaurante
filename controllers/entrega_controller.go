@@ -47,12 +47,8 @@ func CriaEntrega(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.
-		Preload("Pedido").
-		Preload("Cliente").
-		Preload("Funcionario").
-		Create(&entrega)
-	c.JSON(http.StatusOK, entrega)
+	database.DB.Create(&entrega)
+	BuscarEntregaPorId(c)
 }
 
 func AtualizarEntrega(c *gin.Context) {
@@ -76,12 +72,8 @@ func AtualizarEntrega(c *gin.Context) {
 		return
 	}
 
-	database.DB.
-		Preload("Pedido").
-		Preload("Cliente").
-		Preload("Funcionario").
-		Model(&entrega).UpdateColumns(entrega)
-	c.JSON(http.StatusOK, entrega)
+	database.DB.Model(&entrega).UpdateColumns(entrega)
+	BuscarEntregaPorId(c)
 }
 
 func ExcluirEntrega(c *gin.Context) {

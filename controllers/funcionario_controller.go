@@ -45,11 +45,8 @@ func CriaFuncionario(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.
-		Preload("Cargo").
-		Preload("Endereco").
-		Create(&funcionario)
-	c.JSON(http.StatusOK, funcionario)
+	database.DB.Create(&funcionario)
+	BuscarFuncionarioPorId(c)
 }
 
 func AtualizarFuncionario(c *gin.Context) {
@@ -74,12 +71,8 @@ func AtualizarFuncionario(c *gin.Context) {
 		return
 	}
 
-	database.DB.
-		Preload("Cargo").
-		Preload("Endereco").
-		Model(&funcionario).
-		UpdateColumns(funcionario)
-	c.JSON(http.StatusOK, funcionario)
+	database.DB.Model(&funcionario).UpdateColumns(funcionario)
+	BuscarFuncionarioPorId(c)
 }
 
 func ExcluirFuncionario(c *gin.Context) {

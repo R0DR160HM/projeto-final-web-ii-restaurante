@@ -40,7 +40,7 @@ func CriaMetodoPagamento(c *gin.Context) {
 		return
 	}
 	database.DB.Create(&metodoPagamento)
-	c.JSON(http.StatusOK, metodoPagamento)
+	BuscarMetodoPagamentoPorId(c)
 }
 
 func AtualizarMetodoPagamento(c *gin.Context) {
@@ -65,13 +65,13 @@ func AtualizarMetodoPagamento(c *gin.Context) {
 	}
 
 	database.DB.Model(&metodoPagamento).UpdateColumns(metodoPagamento)
-	c.JSON(http.StatusOK, metodoPagamento)
+	BuscarMetodoPagamentoPorId(c)
 }
 
 func ExcluirMetodoPagamento(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var metodoPagamento models.MetodoPagamento
-	database.DB.Delete(&metodoPagamento, id)
+	database.DB.First(&metodoPagamento, id)
 
 	if metodoPagamento.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -81,6 +81,7 @@ func ExcluirMetodoPagamento(c *gin.Context) {
 		return
 	}
 
+	database.DB.Delete(&metodoPagamento, id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"mesagem": "OK",

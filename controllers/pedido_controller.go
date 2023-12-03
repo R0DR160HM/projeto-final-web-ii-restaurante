@@ -47,12 +47,8 @@ func CriaPedido(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.
-		Preload("MetodoPagamento").
-		Preload("Funcionario").
-		Preload("Pratos").
-		Create(&pedido)
-	c.JSON(http.StatusOK, pedido)
+	database.DB.Preload("Pratos").Create(&pedido)
+	BuscarPedidoPorId(c)
 }
 
 func AtualizarPedido(c *gin.Context) {
@@ -76,13 +72,8 @@ func AtualizarPedido(c *gin.Context) {
 		return
 	}
 
-	database.DB.
-		Preload("MetodoPagamento").
-		Preload("Funcionario").
-		Preload("Pratos").
-		Model(&pedido).
-		UpdateColumns(pedido)
-	c.JSON(http.StatusOK, pedido)
+	database.DB.Model(&pedido).UpdateColumns(pedido)
+	BuscarPedidoPorId(c)
 }
 
 func ExcluirPedido(c *gin.Context) {

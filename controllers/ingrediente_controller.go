@@ -40,7 +40,7 @@ func CriaIngrediente(c *gin.Context) {
 		return
 	}
 	database.DB.Create(&ingrediente)
-	c.JSON(http.StatusOK, ingrediente)
+	BuscarIngredientePorId(c)
 }
 
 func AtualizarIngrediente(c *gin.Context) {
@@ -65,7 +65,7 @@ func AtualizarIngrediente(c *gin.Context) {
 	}
 
 	database.DB.Model(&ingrediente).UpdateColumns(ingrediente)
-	c.JSON(http.StatusOK, ingrediente)
+	BuscarIngredientePorId(c)
 }
 
 func ExcluirIngrediente(c *gin.Context) {

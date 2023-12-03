@@ -39,8 +39,8 @@ func CriaCliente(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.Preload("Endereco").Create(&cliente)
-	c.JSON(http.StatusOK, cliente)
+	database.DB.Create(&cliente)
+	BuscarClientePorId(c)
 }
 
 func AtualizarCliente(c *gin.Context) {
@@ -64,8 +64,8 @@ func AtualizarCliente(c *gin.Context) {
 		return
 	}
 
-	database.DB.Preload("Endereco").Model(&cliente).UpdateColumns(cliente)
-	c.JSON(http.StatusOK, cliente)
+	database.DB.Model(&cliente).UpdateColumns(cliente)
+	BuscarClientePorId(c)
 }
 
 func ExcluirCliente(c *gin.Context) {

@@ -39,8 +39,8 @@ func CriaPrato(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.Preload("Ingredientes").Create(&prato)
-	c.JSON(http.StatusOK, prato)
+	database.DB.Create(&prato)
+	BuscarPratoPorId(c)
 }
 
 func AtualizarPrato(c *gin.Context) {
@@ -64,8 +64,8 @@ func AtualizarPrato(c *gin.Context) {
 		return
 	}
 
-	database.DB.Preload("Ingredientes").Model(&prato).UpdateColumns(prato)
-	c.JSON(http.StatusOK, prato)
+	database.DB.Model(&prato).UpdateColumns(prato)
+	BuscarPratoPorId(c)
 }
 
 func ExcluirPrato(c *gin.Context) {

@@ -40,7 +40,7 @@ func CriaEndereco(c *gin.Context) {
 		return
 	}
 	database.DB.Create(&endereco)
-	c.JSON(http.StatusOK, endereco)
+	BuscarEnderecoPorId(c)
 }
 
 func AtualizarEndereco(c *gin.Context) {
@@ -65,7 +65,7 @@ func AtualizarEndereco(c *gin.Context) {
 	}
 
 	database.DB.Model(&endereco).UpdateColumns(endereco)
-	c.JSON(http.StatusOK, endereco)
+	BuscarEnderecoPorId(c)
 }
 
 func ExcluirEndereco(c *gin.Context) {
