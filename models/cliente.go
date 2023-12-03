@@ -13,5 +13,6 @@ type Cliente struct {
 	DataNascimento time.Time `json:"dataNascimento"`
 	Email          string    `json:"email"`
 	Celular        string    `json:"celular"`
-	Endereco       Endereco  `json:"endereco"`
+	EnderecoId     int
+	Endereco       Endereco `json:"endereco"`
 }

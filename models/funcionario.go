@@ -11,6 +11,8 @@ type Funcionario struct {
 	Nome           string    `json:"nome"`
 	CPF            string    `json:"cpf"`
 	DataNascimento time.Time `json:"dataNascimento"`
-	Cargo          Cargo     `json:"cargo"`
-	Endereco       Endereco  `json:"endereco"`
+	CargoID        int
+	Cargo          Cargo `json:"cargo"`
+	EnderecoID     int
+	Endereco       Endereco `json:"endereco"`
 }
