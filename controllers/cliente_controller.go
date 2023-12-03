@@ -10,14 +10,14 @@ import (
 
 func BuscarTodosClientes(c *gin.Context) {
 	var clientes []models.Cliente
-	database.DB.Find(&clientes)
+	database.DB.Preload("Endereco").Find(&clientes)
 	c.JSON(http.StatusOK, clientes)
 }
 
 func BuscarClientePorId(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var cliente models.Cliente
-	database.DB.First(&cliente, id)
+	database.DB.Preload("Endereco").First(&cliente, id)
 
 	if cliente.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -39,7 +39,7 @@ func CriaCliente(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.Create(&cliente)
+	database.DB.Preload("Endereco").Create(&cliente)
 	c.JSON(http.StatusOK, cliente)
 }
 
@@ -64,14 +64,14 @@ func AtualizarCliente(c *gin.Context) {
 		return
 	}
 
-	database.DB.Model(&cliente).UpdateColumns(cliente)
+	database.DB.Preload("Endereco").Model(&cliente).UpdateColumns(cliente)
 	c.JSON(http.StatusOK, cliente)
 }
 
 func ExcluirCliente(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var cliente models.Cliente
-	database.DB.Delete(&cliente, id)
+	database.DB.First(&cliente, id)
 
 	if cliente.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -81,6 +81,7 @@ func ExcluirCliente(c *gin.Context) {
 		return
 	}
 
+	database.DB.Delete(&cliente, id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"mesagem": "OK",

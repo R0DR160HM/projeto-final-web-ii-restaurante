@@ -10,14 +10,20 @@ import (
 
 func BuscarTodosFuncionarios(c *gin.Context) {
 	var funcionarios []models.Funcionario
-	database.DB.Find(&funcionarios)
+	database.DB.
+		Preload("Cargo").
+		Preload("Endereco").
+		Find(&funcionarios)
 	c.JSON(http.StatusOK, funcionarios)
 }
 
 func BuscarFuncionarioPorId(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var funcionario models.Funcionario
-	database.DB.First(&funcionario, id)
+	database.DB.
+		Preload("Cargo").
+		Preload("Endereco").
+		First(&funcionario, id)
 
 	if funcionario.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -39,12 +45,16 @@ func CriaFuncionario(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.Create(&funcionario)
+	database.DB.
+		Preload("Cargo").
+		Preload("Endereco").
+		Create(&funcionario)
 	c.JSON(http.StatusOK, funcionario)
 }
 
 func AtualizarFuncionario(c *gin.Context) {
 	var funcionario models.Funcionario
+
 	id := c.Params.ByName("id")
 	database.DB.First(&funcionario, id)
 
@@ -64,14 +74,18 @@ func AtualizarFuncionario(c *gin.Context) {
 		return
 	}
 
-	database.DB.Model(&funcionario).UpdateColumns(funcionario)
+	database.DB.
+		Preload("Cargo").
+		Preload("Endereco").
+		Model(&funcionario).
+		UpdateColumns(funcionario)
 	c.JSON(http.StatusOK, funcionario)
 }
 
 func ExcluirFuncionario(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var funcionario models.Funcionario
-	database.DB.Delete(&funcionario, id)
+	database.DB.First(&funcionario, id)
 
 	if funcionario.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -81,6 +95,7 @@ func ExcluirFuncionario(c *gin.Context) {
 		return
 	}
 
+	database.DB.Delete(&funcionario, id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"mesagem": "OK",

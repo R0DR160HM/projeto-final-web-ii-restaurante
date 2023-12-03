@@ -10,14 +10,22 @@ import (
 
 func BuscarTodosPedidos(c *gin.Context) {
 	var pedidos []models.Pedido
-	database.DB.Find(&pedidos)
+	database.DB.
+		Preload("MetodoPagamento").
+		Preload("Funcionario").
+		Preload("Pratos").
+		Find(&pedidos)
 	c.JSON(http.StatusOK, pedidos)
 }
 
 func BuscarPedidoPorId(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var pedido models.Pedido
-	database.DB.First(&pedido, id)
+	database.DB.
+		Preload("MetodoPagamento").
+		Preload("Funcionario").
+		Preload("Pratos").
+		First(&pedido, id)
 
 	if pedido.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -39,7 +47,11 @@ func CriaPedido(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.Create(&pedido)
+	database.DB.
+		Preload("MetodoPagamento").
+		Preload("Funcionario").
+		Preload("Pratos").
+		Create(&pedido)
 	c.JSON(http.StatusOK, pedido)
 }
 
@@ -64,14 +76,19 @@ func AtualizarPedido(c *gin.Context) {
 		return
 	}
 
-	database.DB.Model(&pedido).UpdateColumns(pedido)
+	database.DB.
+		Preload("MetodoPagamento").
+		Preload("Funcionario").
+		Preload("Pratos").
+		Model(&pedido).
+		UpdateColumns(pedido)
 	c.JSON(http.StatusOK, pedido)
 }
 
 func ExcluirPedido(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var pedido models.Pedido
-	database.DB.Delete(&pedido, id)
+	database.DB.First(&pedido, id)
 
 	if pedido.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -81,6 +98,7 @@ func ExcluirPedido(c *gin.Context) {
 		return
 	}
 
+	database.DB.Delete(&pedido, id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"mesagem": "OK",

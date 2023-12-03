@@ -71,7 +71,7 @@ func AtualizarCargo(c *gin.Context) {
 func ExcluirCargo(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var cargo models.Cargo
-	database.DB.Delete(&cargo, id)
+	database.DB.First(&cargo, id)
 
 	if cargo.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -81,6 +81,7 @@ func ExcluirCargo(c *gin.Context) {
 		return
 	}
 
+	database.DB.Delete(&cargo, id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"mesagem": "OK",

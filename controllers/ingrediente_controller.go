@@ -71,7 +71,7 @@ func AtualizarIngrediente(c *gin.Context) {
 func ExcluirIngrediente(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var ingrediente models.Ingrediente
-	database.DB.Delete(&ingrediente, id)
+	database.DB.First(&ingrediente, id)
 
 	if ingrediente.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -81,6 +81,7 @@ func ExcluirIngrediente(c *gin.Context) {
 		return
 	}
 
+	database.DB.Delete(&ingrediente, id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"mesagem": "OK",

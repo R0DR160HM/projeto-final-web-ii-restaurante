@@ -71,7 +71,7 @@ func AtualizarEndereco(c *gin.Context) {
 func ExcluirEndereco(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var endereco models.Endereco
-	database.DB.Delete(&endereco, id)
+	database.DB.First(&endereco, id)
 
 	if endereco.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -81,6 +81,7 @@ func ExcluirEndereco(c *gin.Context) {
 		return
 	}
 
+	database.DB.Delete(&endereco, id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"mesagem": "OK",

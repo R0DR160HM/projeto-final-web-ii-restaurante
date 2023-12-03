@@ -10,14 +10,14 @@ import (
 
 func BuscarTodosPratos(c *gin.Context) {
 	var pratos []models.Prato
-	database.DB.Find(&pratos)
+	database.DB.Preload("Ingredientes").Find(&pratos)
 	c.JSON(http.StatusOK, pratos)
 }
 
 func BuscarPratoPorId(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var prato models.Prato
-	database.DB.First(&prato, id)
+	database.DB.Preload("Ingredientes").First(&prato, id)
 
 	if prato.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -39,7 +39,7 @@ func CriaPrato(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.Create(&prato)
+	database.DB.Preload("Ingredientes").Create(&prato)
 	c.JSON(http.StatusOK, prato)
 }
 
@@ -64,14 +64,14 @@ func AtualizarPrato(c *gin.Context) {
 		return
 	}
 
-	database.DB.Model(&prato).UpdateColumns(prato)
+	database.DB.Preload("Ingredientes").Model(&prato).UpdateColumns(prato)
 	c.JSON(http.StatusOK, prato)
 }
 
 func ExcluirPrato(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var prato models.Prato
-	database.DB.Delete(&prato, id)
+	database.DB.First(&prato, id)
 
 	if prato.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -81,6 +81,7 @@ func ExcluirPrato(c *gin.Context) {
 		return
 	}
 
+	database.DB.Delete(&prato, id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"mesagem": "OK",

@@ -10,14 +10,22 @@ import (
 
 func BuscarTodasEntregas(c *gin.Context) {
 	var entregas []models.Entrega
-	database.DB.Find(&entregas)
+	database.DB.
+		Preload("Pedido").
+		Preload("Cliente").
+		Preload("Funcionario").
+		Find(&entregas)
 	c.JSON(http.StatusOK, entregas)
 }
 
 func BuscarEntregaPorId(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var entrega models.Entrega
-	database.DB.First(&entrega, id)
+	database.DB.
+		Preload("Pedido").
+		Preload("Cliente").
+		Preload("Funcionario").
+		First(&entrega, id)
 
 	if entrega.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -39,7 +47,11 @@ func CriaEntrega(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.Create(&entrega)
+	database.DB.
+		Preload("Pedido").
+		Preload("Cliente").
+		Preload("Funcionario").
+		Create(&entrega)
 	c.JSON(http.StatusOK, entrega)
 }
 
@@ -64,14 +76,18 @@ func AtualizarEntrega(c *gin.Context) {
 		return
 	}
 
-	database.DB.Model(&entrega).UpdateColumns(entrega)
+	database.DB.
+		Preload("Pedido").
+		Preload("Cliente").
+		Preload("Funcionario").
+		Model(&entrega).UpdateColumns(entrega)
 	c.JSON(http.StatusOK, entrega)
 }
 
 func ExcluirEntrega(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var entrega models.Entrega
-	database.DB.Delete(&entrega, id)
+	database.DB.First(&entrega, id)
 
 	if entrega.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -81,6 +97,7 @@ func ExcluirEntrega(c *gin.Context) {
 		return
 	}
 
+	database.DB.Delete(&entrega, id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"mesagem": "OK",
