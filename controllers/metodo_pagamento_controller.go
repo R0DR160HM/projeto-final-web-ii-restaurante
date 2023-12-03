@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/R0DR160HM/projeto-final-web-ii-restaurante/database"
 	"github.com/R0DR160HM/projeto-final-web-ii-restaurante/models"
@@ -40,6 +41,9 @@ func CriaMetodoPagamento(c *gin.Context) {
 		return
 	}
 	database.DB.Create(&metodoPagamento)
+	c.Params = gin.Params{
+		gin.Param{Key: "id", Value: strconv.FormatUint(uint64(metodoPagamento.ID), 10)},
+	}
 	BuscarMetodoPagamentoPorId(c)
 }
 
@@ -65,6 +69,9 @@ func AtualizarMetodoPagamento(c *gin.Context) {
 	}
 
 	database.DB.Model(&metodoPagamento).UpdateColumns(metodoPagamento)
+	c.Params = gin.Params{
+		gin.Param{Key: "id", Value: strconv.FormatUint(uint64(metodoPagamento.ID), 10)},
+	}
 	BuscarMetodoPagamentoPorId(c)
 }
 

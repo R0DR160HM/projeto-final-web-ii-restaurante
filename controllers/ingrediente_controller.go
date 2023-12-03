@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/R0DR160HM/projeto-final-web-ii-restaurante/database"
 	"github.com/R0DR160HM/projeto-final-web-ii-restaurante/models"
@@ -40,6 +41,9 @@ func CriaIngrediente(c *gin.Context) {
 		return
 	}
 	database.DB.Create(&ingrediente)
+	c.Params = gin.Params{
+		gin.Param{Key: "id", Value: strconv.FormatUint(uint64(ingrediente.ID), 10)},
+	}
 	BuscarIngredientePorId(c)
 }
 
@@ -65,6 +69,9 @@ func AtualizarIngrediente(c *gin.Context) {
 	}
 
 	database.DB.Model(&ingrediente).UpdateColumns(ingrediente)
+	c.Params = gin.Params{
+		gin.Param{Key: "id", Value: strconv.FormatUint(uint64(ingrediente.ID), 10)},
+	}
 	BuscarIngredientePorId(c)
 }
 

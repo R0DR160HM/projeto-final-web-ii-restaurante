@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/R0DR160HM/projeto-final-web-ii-restaurante/database"
 	"github.com/R0DR160HM/projeto-final-web-ii-restaurante/models"
@@ -48,7 +49,7 @@ func CriaPedido(c *gin.Context) {
 		return
 	}
 	database.DB.Preload("Pratos").Create(&pedido)
-	BuscarPedidoPorId(c)
+	retornarPedido(c, pedido)
 }
 
 func AtualizarPedido(c *gin.Context) {
@@ -73,7 +74,7 @@ func AtualizarPedido(c *gin.Context) {
 	}
 
 	database.DB.Model(&pedido).UpdateColumns(pedido)
-	BuscarPedidoPorId(c)
+	retornarPedido(c, pedido)
 }
 
 func ExcluirPedido(c *gin.Context) {
@@ -94,4 +95,11 @@ func ExcluirPedido(c *gin.Context) {
 		"status":  "OK",
 		"mesagem": "OK",
 	})
+}
+
+func retornarPedido(c *gin.Context, m models.Pedido) {
+	c.Params = gin.Params{
+		gin.Param{Key: "id", Value: strconv.FormatUint(uint64(m.ID), 10)},
+	}
+	BuscarPedidoPorId(c)
 }

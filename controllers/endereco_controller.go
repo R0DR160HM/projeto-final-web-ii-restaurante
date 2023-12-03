@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/R0DR160HM/projeto-final-web-ii-restaurante/database"
 	"github.com/R0DR160HM/projeto-final-web-ii-restaurante/models"
@@ -40,6 +41,9 @@ func CriaEndereco(c *gin.Context) {
 		return
 	}
 	database.DB.Create(&endereco)
+	c.Params = gin.Params{
+		gin.Param{Key: "id", Value: strconv.FormatUint(uint64(endereco.ID), 10)},
+	}
 	BuscarEnderecoPorId(c)
 }
 
@@ -65,6 +69,9 @@ func AtualizarEndereco(c *gin.Context) {
 	}
 
 	database.DB.Model(&endereco).UpdateColumns(endereco)
+	c.Params = gin.Params{
+		gin.Param{Key: "id", Value: strconv.FormatUint(uint64(endereco.ID), 10)},
+	}
 	BuscarEnderecoPorId(c)
 }
 
