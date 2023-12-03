@@ -48,7 +48,7 @@ func CriaPedido(c *gin.Context) {
 		})
 		return
 	}
-	database.DB.Preload("Pratos").Create(&pedido)
+	database.DB.Create(&pedido)
 	retornarPedido(c, pedido)
 }
 
