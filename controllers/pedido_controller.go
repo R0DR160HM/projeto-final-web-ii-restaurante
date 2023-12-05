@@ -48,6 +48,23 @@ func CriaPedido(c *gin.Context) {
 		})
 		return
 	}
+
+	var valorTotal float64
+	for _, p := range pedido.Pratos {
+		id := int(p.ID)
+		database.DB.First(&p, id)
+		if p.ID == 0 {
+			c.JSON(http.StatusNotFound, gin.H{
+				"status":   "ERRO",
+				"mensagem": "Pedido " + strconv.Itoa(id) + " não encontrado",
+			})
+			return
+		}
+		valorTotal += p.Valor
+	}
+
+	pedido.Valor = valorTotal
+
 	database.DB.Create(&pedido)
 	retornarPedido(c, pedido)
 }
