@@ -1,0 +1,439 @@
+openapi: '3.0.2'
+info:
+  title: Projeti Final Web II - Restaurante
+  version: '1.0'
+servers:
+  - url: http://localhost:8080
+paths:
+  /enderecos:
+    get:
+      summary: Busca todos os endereços
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cadastra um endereço
+      responses:
+        '200':
+          description: OK
+  /enderecos/{id}:
+    get:
+      summary: Busca um endereço por id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    delete:
+      summary: Exclui um endereço
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    patch:
+      summary: Altera um endereço
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+  /cargos:
+    get:
+      summary: Busca todos os cargos
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cadastra um cargo
+      responses:
+        '200':
+          description: OK
+  /cargos/{id}:
+    get:
+      summary: Busca um cargo por id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    delete:
+      summary: Exclui um cargo
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    patch:
+      summary: Altera um cargo
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+  /clientes:
+    get:
+      summary: Busca todos os clientes
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cadastra um cliente
+      responses:
+        '200':
+          description: OK
+  /clientes/{id}:
+    get:
+      summary: Busca um cliente por id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    delete:
+      summary: Exclui um cliente
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    patch:
+      summary: Altera um cliente
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+  /entregas:
+    get:
+      summary: Busca todas as entregas
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cadastra uma entrega
+      responses:
+        '200':
+          description: OK
+  /entregas/{id}:
+    get:
+      summary: Busca uma entrega por id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    delete:
+      summary: Exclui uma entrega
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    patch:
+      summary: Altera uma entrega
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+  /funcionarios:
+    get:
+      summary: Busca todos os funcionários
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cadastra um funcionário
+      responses:
+        '200':
+          description: OK
+  /funcionarios/{id}:
+    get:
+      summary: Busca um funcionário por id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    delete:
+      summary: Exclui um funcionário
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    patch:
+      summary: Altera um funcionário
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+  /ingredientes:
+    get:
+      summary: Busca todos os ingredientes
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cadastra um ingrediente
+      responses:
+        '200':
+          description: OK
+  /ingredientes/{id}:
+    get:
+      summary: Busca um ingrediente por id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    delete:
+      summary: Exclui um ingrediente
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    patch:
+      summary: Altera um ingrediente
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+  /pedidos:
+    get:
+      summary: Busca todos os pedidos
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cadastra um pedido
+      responses:
+        '200':
+          description: OK
+  /pedidos/{id}:
+    get:
+      summary: Busca um pedido por id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    delete:
+      summary: Exclui um pedido
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    patch:
+      summary: Altera um pedido
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+  /pratos:
+    get:
+      summary: Busca todos os pratos
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cadastra um prato
+      responses:
+        '200':
+          description: OK
+  /pratos/{id}:
+    get:
+      summary: Busca um prato por id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    delete:
+      summary: Exclui um prato
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    patch:
+      summary: Altera um prato
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+  /metodos_pagamento:
+    get:
+      summary: Busca todos os métodos de pagamento
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Cadastra um prato
+      responses:
+        '200':
+          description: OK
+  /metodos_pagamento/{id}:
+    get:
+      summary: Busca um método de pagamento por id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    delete:
+      summary: Exclui um métodos de pagamento
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
+    patch:
+      summary: Altera um métodos de pagamento
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID numérico do registro
+      responses:
+        '200':
+          description: OK    
